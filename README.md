@@ -1,6 +1,6 @@
 # WP-CLI Magic Login
 
-A WP-CLI package that provides magic login URL generation and must-use plugin management for local WordPress development with Laravel Valet.
+A WP-CLI package that generates one-time magic login URLs for WordPress. Built for local development.
 
 ---
 
@@ -9,8 +9,6 @@ A WP-CLI package that provides magic login URL generation and must-use plugin ma
 ```bash
 wp package install mralaminahamed/wp-cli-magic-login
 ```
-
-This registers the `wp magic-login` command with subcommands.
 
 ---
 
@@ -30,7 +28,7 @@ wp magic-login install --force
 
 ---
 
-### `wp magic-login` (generate URL)
+### `wp magic-login`
 
 Generates a one-time login URL for any WordPress user without requiring a password.
 
@@ -58,61 +56,6 @@ wp magic-login --porcelain
 | `--expiry`   | 60       | Token lifetime in seconds              |
 | `--no-launch`| false    | Print URL without opening the browser   |
 | `--porcelain`| false    | Output raw URL only                     |
-
----
-
-### `wp mu-plugin`
-
-Manages must-use plugins on Valet-hosted WordPress sites. Operates at the filesystem level — no WordPress bootstrap required.
-
-#### Site Resolution
-
-| Scenario | Resolution |
-|----------|------------|
-| `--domain` omitted | Walks up from `cwd` to find `wp-config.php` |
-| `--domain=mysite.test` | Reads Valet config for parked/linked paths |
-| Valet config absent | Falls back to `~/Sites/<folder>` |
-
-#### `wp mu-plugin install`
-
-```bash
-# Install the bundled magic-login handler into current site
-wp mu-plugin install magic-login-handler
-
-# Install into a specific Valet domain
-wp mu-plugin install magic-login-handler --domain=mysite.test
-
-# Install any custom PHP file by path
-wp mu-plugin install /path/to/my-plugin.php --domain=shop.test
-
-# Overwrite an existing file
-wp mu-plugin install magic-login-handler --force
-```
-
-#### `wp mu-plugin remove`
-
-```bash
-# Remove by filename (.php extension optional)
-wp mu-plugin remove magic-login-handler
-
-# Remove from a specific domain, skip confirmation
-wp mu-plugin remove magic-login-handler --domain=mysite.test --yes
-```
-
-#### `wp mu-plugin list`
-
-```bash
-# List all mu-plugins in current site
-wp mu-plugin list
-
-# List for a specific domain
-wp mu-plugin list --domain=mysite.test
-
-# Output as JSON
-wp mu-plugin list --format=json
-```
-
-Output columns: `file`, `size`, `modified`, `path`
 
 ---
 
