@@ -1,64 +1,24 @@
 # WP-CLI Magic Login
 
-A WP-CLI package that generates a one-time magic login URL for any WordPress
-user — defaulting to the first administrator account. Built for local
-development with **Laravel Valet** and **WP-CLI**.
-
----
-
-## Requirements
-
-| Dependency | Version  |
-|------------|----------|
-| PHP        | ≥ 7.4    |
-| WP-CLI     | ≥ 2.0    |
-| WordPress  | ≥ 5.0    |
+A WP-CLI package that provides magic login URL generation and must-use plugin management for local WordPress development with Laravel Valet.
 
 ---
 
 ## Installation
 
-### 1. Install the WP-CLI package
-
 ```bash
 wp package install mralaminahamed/wp-cli-magic-login
 ```
 
-### 2. Install the WordPress request handler
-
-After installing the package, the `wp mu-plugin` command becomes available.
-Use it to install the magic-login handler:
-
-```bash
-# Install into current directory's WordPress site
-wp mu-plugin install magic-login-handler
-
-# Install into a specific Valet domain
-wp mu-plugin install magic-login-handler --domain=mysite.test
-```
-
-#### Manual installation (alternative)
-
-Copy `magic-login-handler.php` into your site's must-use plugins directory:
-
-```bash
-cp vendor/mralaminahamed/wp-cli-magic-login/magic-login-handler.php \
-   wp-content/mu-plugins/magic-login-handler.php
-```
-
-Or, for a Valet-managed site, you can symlink it:
-
-```bash
-ln -s ~/.wp-cli/packages/vendor/mralaminahamed/wp-cli-magic-login/magic-login-handler.php \
-   wp-content/mu-plugins/magic-login-handler.php
-```
-
-> **Note:** The handler must be present so the login URL resolves correctly
-> when visited in the browser.
+This registers two commands: `wp magic-login` and `wp mu-plugin`.
 
 ---
 
-## Usage
+## Commands
+
+### `wp magic-login`
+
+Generates a one-time login URL for any WordPress user without requiring a password.
 
 ```bash
 # Log in as the first administrator (opens browser automatically)
@@ -67,104 +27,98 @@ wp magic-login
 # Print the URL only; do not open the browser
 wp magic-login --no-launch
 
-# Target a specific user by login
+# Target a specific user by login name or ID
 wp magic-login --user=johndoe
-
-# Target a specific user by ID
 wp magic-login --user=3
 
-# Set a custom token expiry (seconds, default: 60)
+# Set a custom token expiry (seconds)
 wp magic-login --expiry=300
 
 # Output raw URL only (useful in scripts)
 wp magic-login --porcelain
 ```
 
----
-
-## Options
-
-| Flag            | Default         | Description                                              |
-|-----------------|-----------------|----------------------------------------------------------|
-| `--user`        | First admin     | User login name or numeric ID                            |
-| `--expiry`      | `60`            | Token lifetime in seconds                                |
-| `--no-launch`   | `false`         | Print URL without opening the browser                    |
-| `--porcelain`   | `false`         | Output the raw URL only; no success message              |
+| Option       | Default | Description                              |
+|--------------|---------|------------------------------------------|
+| `--user`     | first admin | User login name or numeric ID        |
+| `--expiry`   | 60       | Token lifetime in seconds              |
+| `--no-launch`| false    | Print URL without opening the browser   |
+| `--porcelain`| false    | Output raw URL only                     |
 
 ---
 
-## Security Notice
+### `wp mu-plugin`
 
-This package is intended **exclusively for local and staging environments**.
-The generated token is single-use and transient-backed, but:
+Manages must-use plugins on Valet-hosted WordPress sites. Operates at the filesystem level — no WordPress bootstrap required.
 
-- Do **not** install the mu-plugin handler on a production site.
-- Always restrict CLI access on staging environments.
-
----
-
-## `wp mu-plugin` — Must-Use Plugin Manager
-
-> **Note:** This command is included in this package. It becomes available after
-> running `wp package install mralaminahamed/wp-cli-magic-login`.
-
-Installs, removes, and lists must-use plugins on any Valet-hosted WordPress site.
-Operates entirely at the filesystem level — no WordPress bootstrap required.
-
-### How site resolution works
+#### Site Resolution
 
 | Scenario | Resolution |
-|---|---|
+|----------|------------|
 | `--domain` omitted | Walks up from `cwd` to find `wp-config.php` |
-| `--domain=mysite.test` | Reads `~/.config/valet/config.json` for parked/linked paths, then matches folder `mysite` |
+| `--domain=mysite.test` | Reads Valet config for parked/linked paths |
 | Valet config absent | Falls back to `~/Sites/<folder>` |
 
-### install
+#### `wp mu-plugin install`
 
 ```bash
-# Install the bundled magic-login handler into the current site
+# Install the bundled magic-login handler into current site
 wp mu-plugin install magic-login-handler
 
 # Install into a specific Valet domain
 wp mu-plugin install magic-login-handler --domain=mysite.test
 
 # Install any custom PHP file by path
-wp mu-plugin install /path/to/my-loader.php --domain=shop.test
+wp mu-plugin install /path/to/my-plugin.php --domain=shop.test
 
 # Overwrite an existing file
-wp mu-plugin install magic-login-handler --domain=mysite.test --force
+wp mu-plugin install magic-login-handler --force
 ```
 
-### remove
+#### `wp mu-plugin remove`
 
 ```bash
 # Remove by filename (.php extension optional)
 wp mu-plugin remove magic-login-handler
 
-# Remove from a specific domain, skip confirmation prompt
+# Remove from a specific domain, skip confirmation
 wp mu-plugin remove magic-login-handler --domain=mysite.test --yes
 ```
 
-### list
+#### `wp mu-plugin list`
 
 ```bash
-# List all mu-plugins in the current site
+# List all mu-plugins in current site
 wp mu-plugin list
 
 # List for a specific domain
 wp mu-plugin list --domain=mysite.test
 
 # Output as JSON
-wp mu-plugin list --domain=mysite.test --format=json
+wp mu-plugin list --format=json
 ```
 
 Output columns: `file`, `size`, `modified`, `path`
 
-### Bundled slugs
+---
 
-| Slug | File |
-|---|---|
-| `magic-login-handler` | `magic-login-handler.php` |
+## Requirements
+
+| Dependency | Version |
+|------------|---------|
+| PHP        | ≥ 7.4   |
+| WP-CLI     | ≥ 2.0   |
+| WordPress  | ≥ 5.0   |
+
+---
+
+## Security Notice
+
+This package is intended **exclusively for local and staging environments**.
+
+- Do **not** install the magic-login handler on production sites
+- The generated token is single-use and transient-backed
+- Always restrict CLI access on staging environments
 
 ---
 
