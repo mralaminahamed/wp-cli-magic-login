@@ -16,4 +16,3 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 require_once __DIR__ . '/vendor/autoload.php';
 
 WP_CLI::add_command( 'magic-login', AlAminAhamed\WpCli\MagicLogin\MagicLoginCommand::class );
-WP_CLI::add_command( 'magic-login install', AlAminAhamed\WpCli\MagicLogin\InstallCommand::class );
