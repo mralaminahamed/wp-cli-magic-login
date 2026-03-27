@@ -7,14 +7,21 @@
  * verify the one-time token, authenticate the user, and redirect.
  *
  * INSTALLATION:
- *   Copy this file to wp-content/mu-plugins/magic-login-handler.php
+ *   Copy this file to wp-content/mu-plugins/wp-cli-magic-login-server.php
  *   OR include it from your theme's functions.php (development only).
  *
  * IMPORTANT:
  *   This handler is intentionally designed for local/staging environments.
  *   Do not deploy to production without additional security review.
  *
- * @package AlAminAhamed\WpCli\MagicLogin
+ * @package WP_CLI_Magic_Login
+ *
+ * Plugin Name: WP CLI Magic Login Command Server
+ * Description: Companion plugin to the WP-CLI Magic Login Command
+ * Author: Al Amin Ahamed
+ * Author URI: https://alaminahamed.com
+ * Plugin URI: https://github.com/mralaminahamed/wp-cli-magic-login
+ * Version: 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -14,3 +14,4 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 }
 
 WP_CLI::add_command( 'magic-login', WP_CLI_Magic_Login\MagicLoginCommand::class );
+WP_CLI::add_command( 'magic-login install-server', WP_CLI_Magic_Login\MagicLoginServerInstallCommand::class );
