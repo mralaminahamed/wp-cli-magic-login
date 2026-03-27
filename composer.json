@@ -18,7 +18,10 @@
     "autoload": {
         "psr-4": {
             "AlAminAhamed\\WpCli\\MagicLogin\\": "src/"
-        }
+        },
+        "files": [
+            "command.php"
+        ]
     },
     "extra": {
         "commands": [
