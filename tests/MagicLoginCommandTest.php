@@ -7,7 +7,7 @@ use WP_CLI_Magic_Login\MagicLoginCommand;
 /**
  * Test the magic login command.
  */
-class MagicLoginCommandTest extends \WP_CLI_CommandTestCase {
+class MagicLoginCommandTest extends \WP_CLI\Tests\TestCase {
 
     public function test_it_has_install_subcommand() {
         $command = new MagicLoginCommand();
