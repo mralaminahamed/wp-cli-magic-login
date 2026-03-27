@@ -1,5 +1,6 @@
 {
     "name": "mralaminahamed/wp-cli-magic-login",
+    "version": "1.0.0",
     "description": "WP-CLI commands for magic login and must-use plugin management on Laravel Valet sites.",
     "type": "wp-cli-package",
     "license": "MIT",
@@ -11,9 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4"
-    },
-    "require-dev": {
+        "php": ">=7.4",
         "wp-cli/wp-cli": "^2.0"
     },
     "autoload": {
