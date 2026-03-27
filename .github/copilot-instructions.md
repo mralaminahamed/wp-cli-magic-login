@@ -33,7 +33,7 @@ Install, remove, and list must-use plugins on Valet sites.
 - PHP 7.4+ compatibility
 - PSR-4 autoloading
 - WordPress coding standards
-- Use `AlAminAhamed\WpCli\MagicLogin\` namespace
+- Use `WP_CLI_Magic_Login\` namespace
 
 ## Project Structure
 
