@@ -10,13 +10,27 @@ A WP-CLI package that provides magic login URL generation and must-use plugin ma
 wp package install mralaminahamed/wp-cli-magic-login
 ```
 
-This registers two commands: `wp magic-login` and `wp mu-plugin`.
+This registers the `wp magic-login` command with subcommands.
 
 ---
 
 ## Commands
 
-### `wp magic-login`
+### `wp magic-login install`
+
+Installs the magic-login handler mu-plugin to the WordPress site.
+
+```bash
+# Install the handler to the current site
+wp magic-login install
+
+# Overwrite if already installed
+wp magic-login install --force
+```
+
+---
+
+### `wp magic-login` (generate URL)
 
 Generates a one-time login URL for any WordPress user without requiring a password.
 

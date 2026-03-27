@@ -3,9 +3,9 @@
 /**
  * WP-CLI Magic Login Package
  *
- * Registers all commands provided by this package:
- *   - `wp magic-login`  — generate a one-time login URL for an admin account.
- *   - `wp mu-plugin`    — install, remove, and list must-use plugins on Valet sites.
+ * Registers commands:
+ *   - `wp magic-login`    — generate magic login URL (with install subcommand)
+ *   - `wp mu-plugin`     — manage must-use plugins on Valet sites
  *
  * @package AlAminAhamed\WpCli\MagicLogin
  */
