@@ -1,6 +1,6 @@
 <?php
 
-namespace AlAmin\WpCli\MagicLogin;
+namespace AlAminAhamed\WpCli\MagicLogin;
 
 use WP_CLI;
 use WP_CLI_Command;
@@ -28,7 +28,7 @@ use WP_CLI_Command;
  *     # Set a custom expiry (in seconds, default 60)
  *     $ wp magic-login --expiry=300
  *
- * @package AlAmin\WpCli\MagicLogin
+ * @package AlAminAhamed\WpCli\MagicLogin
  */
 class MagicLoginCommand extends WP_CLI_Command {
 

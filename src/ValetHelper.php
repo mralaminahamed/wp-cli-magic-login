@@ -1,6 +1,6 @@
 <?php
 
-namespace AlAmin\WpCli\MagicLogin;
+namespace AlAminAhamed\WpCli\MagicLogin;
 
 /**
  * Resolves WordPress installation paths for Laravel Valet sites.
@@ -9,7 +9,7 @@ namespace AlAmin\WpCli\MagicLogin;
  * This helper locates the correct site root either from the current working
  * directory or from a domain name supplied on the CLI.
  *
- * @package AlAmin\WpCli\MagicLogin
+ * @package AlAminAhamed\WpCli\MagicLogin
  */
 class ValetHelper {
 

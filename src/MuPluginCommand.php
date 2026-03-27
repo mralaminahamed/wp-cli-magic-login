@@ -1,6 +1,6 @@
 <?php
 
-namespace AlAmin\WpCli\MagicLogin;
+namespace AlAminAhamed\WpCli\MagicLogin;
 
 use WP_CLI;
 use WP_CLI_Command;
@@ -32,7 +32,7 @@ use WP_CLI_Command;
  *     # List mu-plugins for a specific domain
  *     $ wp mu-plugin list --domain=mysite.test
  *
- * @package AlAmin\WpCli\MagicLogin
+ * @package AlAminAhamed\WpCli\MagicLogin
  */
 class MuPluginCommand extends WP_CLI_Command {
 
