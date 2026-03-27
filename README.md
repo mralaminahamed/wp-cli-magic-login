@@ -26,6 +26,19 @@ wp package install mralaminahamed/wp-cli-magic-login
 
 ### 2. Install the WordPress request handler
 
+After installing the package, the `wp mu-plugin` command becomes available.
+Use it to install the magic-login handler:
+
+```bash
+# Install into current directory's WordPress site
+wp mu-plugin install magic-login-handler
+
+# Install into a specific Valet domain
+wp mu-plugin install magic-login-handler --domain=mysite.test
+```
+
+#### Manual installation (alternative)
+
 Copy `magic-login-handler.php` into your site's must-use plugins directory:
 
 ```bash
@@ -91,6 +104,9 @@ The generated token is single-use and transient-backed, but:
 ---
 
 ## `wp mu-plugin` — Must-Use Plugin Manager
+
+> **Note:** This command is included in this package. It becomes available after
+> running `wp package install mralaminahamed/wp-cli-magic-login`.
 
 Installs, removes, and lists must-use plugins on any Valet-hosted WordPress site.
 Operates entirely at the filesystem level — no WordPress bootstrap required.
