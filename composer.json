@@ -22,6 +22,7 @@
         }
     },
     "extra": {
+        "bootstrap": "magic-login.php",
         "commands": [
             "magic-login",
             "mu-plugin"
