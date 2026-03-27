@@ -19,10 +19,12 @@
     "autoload": {
         "psr-4": {
             "AlAminAhamed\\WpCli\\MagicLogin\\": "src/"
-        }
+        },
+        "files": [
+            "magic-login.php"
+        ]
     },
     "extra": {
-        "bootstrap": "magic-login.php",
         "commands": [
             "magic-login",
             "mu-plugin"
