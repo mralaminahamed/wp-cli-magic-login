@@ -1,6 +1,6 @@
 <?php
 
-namespace AlAminAhamed\WpCli\MagicLogin;
+namespace WP_CLI_Magic_Login;
 
 use WP_CLI;
 use WP_CLI_Command;
@@ -194,7 +194,7 @@ class MagicLoginCommand extends WP_CLI_Command {
             WP_CLI::error( sprintf( 'mu-plugins directory not found: %s', $muplugins_dir ) );
         }
 
-        $source = dirname( __DIR__ ) . '/magic-login-handler.php';
+        $source = dirname( __DIR__ ) . '/plugin/magic-login-handler.php';
         $target = $muplugins_dir . '/magic-login-handler.php';
 
         if ( file_exists( $target ) && ! $force ) {

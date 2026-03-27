@@ -1,2 +1,2 @@
 require:
-  - magic-login.php
+  - command.php
