@@ -20,7 +20,7 @@
             "AlAminAhamed\\WpCli\\MagicLogin\\": "src/"
         },
         "files": [
-            "command.php"
+            "magic-login.php"
         ]
     },
     "extra": {
