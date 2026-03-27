@@ -1,0 +1,55 @@
+# Dependencies
+/vendor/
+/node_modules/
+/.yarn/
+
+# Build outputs
+/build/
+/dist/
+/dist-ssr/
+/release/
+
+# Package managers
+composer.lock
+yarn.lock
+
+# PHP
+/.phpunit.result.cache
+/.phpactor.json
+
+# Environment
+.env
+.env.*
+!.env.example
+.puc_pat
+
+# Logs
+/logs/
+*.log
+*-debug.log
+*-error.log
+*-lock.yaml
+
+# Editor/IDE
+/.vscode/
+!.vscode/extensions.json
+/.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# macOS
+**/.DS_Store
+
+# AI Coding tools
+/.aider*
+/opencode.json
+/.trae/
+/QWEN.md
+/CLAUDE.md
+
+# Misc
+*.local
+*.zip
