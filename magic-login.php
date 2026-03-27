@@ -7,7 +7,7 @@
  *   - `wp magic-login`  — generate a one-time login URL for an admin account.
  *   - `wp mu-plugin`    — install, remove, and list must-use plugins on Valet sites.
  *
- * @package AlAmin\WpCli\MagicLogin
+ * @package AlAminAhamed\WpCli\MagicLogin
  */
 
 if ( ! class_exists( 'WP_CLI' ) ) {
@@ -16,5 +16,5 @@ if ( ! class_exists( 'WP_CLI' ) ) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-WP_CLI::add_command( 'magic-login', AlAmin\WpCli\MagicLogin\MagicLoginCommand::class );
-WP_CLI::add_command( 'mu-plugin',   AlAmin\WpCli\MagicLogin\MuPluginCommand::class );
+WP_CLI::add_command( 'magic-login', AlAminAhamed\WpCli\MagicLogin\MagicLoginCommand::class );
+WP_CLI::add_command( 'mu-plugin',   AlAminAhamed\WpCli\MagicLogin\MuPluginCommand::class );

@@ -14,7 +14,7 @@
  *   This handler is intentionally designed for local/staging environments.
  *   Do not deploy to production without additional security review.
  *
- * @package AlAmin\WpCli\MagicLogin
+ * @package AlAminAhamed\WpCli\MagicLogin
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
