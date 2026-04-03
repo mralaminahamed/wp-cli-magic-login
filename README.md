@@ -14,7 +14,7 @@ wp package install mralaminahamed/wp-cli-magic-login
 
 ## Commands
 
-### `wp magic-login install`
+### `wp magic-login install-server`
 
 Installs the magic-login handler mu-plugin to the WordPress site.
 
@@ -24,6 +24,9 @@ wp magic-login install
 
 # Overwrite if already installed
 wp magic-login install --force
+
+# Manually specify the path to the mu-plugin
+ln -s ~/.wp-cli/packages/vendor/mralaminahamed/wp-cli-magic-login/plugin/wp-cli-magic-login-server.php wp-content/mu-plugins/wp-cli-magic-login-server.php
 ```
 
 ---
