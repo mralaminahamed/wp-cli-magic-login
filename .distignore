@@ -1,13 +1,10 @@
 .*
 *node_modules*
 *tests*
-src*
+features
 resources
 release
-*.md
 *.log
-*.json
-*.lock
 *.neon
 phpcs.xml
 phpcs.*.xml
@@ -17,3 +14,5 @@ cache*
 coverage*
 *phpunit*
 *-error.log*
+behat.yml
+phpunit.xml.dist
