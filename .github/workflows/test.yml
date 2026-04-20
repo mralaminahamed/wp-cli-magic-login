@@ -4,39 +4,47 @@ on:
   pull_request:
     branches:
       - trunk
+  push:
+    branches:
+      - trunk
   workflow_dispatch:
   workflow_call:
 
 jobs:
   unit:
     strategy:
+      fail-fast: false
       matrix:
-        php-version: ['8.0', '7.4', '5.6']
+        php-version: ['7.4', '8.0', '8.1', '8.2', '8.3']
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          coverage: none
           tools: composer
 
       - name: Validate composer.json
-        run: composer validate --strict
+        run: composer validate --strict --no-check-lock
 
-      - run: composer install
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
 
-      - run: composer run phpunit
+      - name: Run unit tests
+        run: composer run phpunit
 
   behat:
     strategy:
+      fail-fast: false
       matrix:
-        php-version: ['8.0', '7.4', '5.6']
+        php-version: ['7.4', '8.1', '8.3']
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:5
+        image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: wp_cli_test
@@ -45,19 +53,30 @@ jobs:
           MYSQL_HOST: 127.0.0.1
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          coverage: none
           tools: composer
 
-      - run: composer install
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
 
-      - run: composer run behat
+      - name: Prepare test environment
+        run: composer run prepare-tests
+        env:
+          WP_CLI_TEST_DBUSER: wp_cli_test
+          WP_CLI_TEST_DBPASS: password1
+          WP_CLI_TEST_DBNAME: wp_cli_test
+          WP_CLI_TEST_DBHOST: 127.0.0.1:${{ job.services.mysql.ports[3306] }}
+
+      - name: Run behat tests
+        run: composer run behat
         env:
           WP_CLI_TEST_DBUSER: wp_cli_test
           WP_CLI_TEST_DBPASS: password1
