@@ -3,8 +3,9 @@
 /**
  * WP-CLI Magic Login Package
  *
- * Registers command:
- *   - `wp magic-login` — generate magic login URL (with install subcommand)
+ * Registers commands:
+ *   - `wp magic-login`                — generate a one-time magic login URL
+ *   - `wp magic-login install-server` — install the handler mu-plugin
  *
  * @package WP_CLI_Magic_Login
  */

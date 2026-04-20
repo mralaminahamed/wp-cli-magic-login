@@ -20,10 +20,10 @@ Installs the magic-login handler mu-plugin to the WordPress site.
 
 ```bash
 # Install the handler to the current site
-wp magic-login install
+wp magic-login install-server
 
 # Overwrite if already installed
-wp magic-login install --force
+wp magic-login install-server --force
 
 # Manually specify the path to the mu-plugin
 ln -s ~/.wp-cli/packages/vendor/mralaminahamed/wp-cli-magic-login/plugin/wp-cli-magic-login-server.php wp-content/mu-plugins/wp-cli-magic-login-server.php
@@ -79,6 +79,28 @@ This package is intended **exclusively for local and staging environments**.
 - Do **not** install the magic-login handler on production sites
 - The generated token is single-use and transient-backed
 - Always restrict CLI access on staging environments
+
+---
+
+## Development
+
+```bash
+# Install dependencies
+composer install
+
+# Unit tests
+composer phpunit
+
+# Behat acceptance tests (requires MySQL)
+composer prepare-tests
+composer behat
+
+# Coding standards
+composer phpcs
+
+# Full suite
+composer test
+```
 
 ---
 
