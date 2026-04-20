@@ -1,6 +1,5 @@
 {
     "name": "mralaminahamed/wp-cli-magic-login",
-    "version": "1.0.0",
     "description": "WP-CLI commands for magic login and must-use plugin management on Laravel Valet sites.",
     "type": "wp-cli-package",
     "license": "MIT",
@@ -13,14 +12,15 @@
         }
     ],
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "wp-cli/wp-cli": "^2.13"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.6.34",
-        "wp-cli/entity-command": "^v2.8.9",
-        "wp-cli/extension-command": "^v2.3.1",
-        "wp-cli/server-command": "^v2.0.17",
-        "wp-cli/wp-cli-tests": "^5.1"
+        "wp-cli/entity-command": "^2",
+        "wp-cli/extension-command": "^2",
+        "wp-cli/server-command": "^2",
+        "wp-cli/wp-cli-tests": "^5"
     },
     "autoload": {
         "psr-4": {
@@ -37,10 +37,41 @@
         }
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-trunk": "1.x-dev"
+        },
+        "commands": [
+            "magic-login",
+            "magic-login install-server"
+        ]
+    },
     "config": {
+        "process-timeout": 7200,
+        "sort-packages": true,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true
-        }
+        },
+        "lock": false
+    },
+    "scripts": {
+        "behat": "run-behat-tests",
+        "behat-rerun": "rerun-behat-tests",
+        "lint": "run-linter-tests",
+        "phpcs": "run-phpcs-tests",
+        "phpcbf": "run-phpcbf-cleanup",
+        "phpunit": "run-php-unit-tests",
+        "prepare-tests": "install-package-tests",
+        "test": [
+            "@lint",
+            "@phpcs",
+            "@phpunit",
+            "@behat"
+        ]
+    },
+    "support": {
+        "issues": "https://github.com/mralaminahamed/wp-cli-magic-login/issues"
     }
 }
