@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return void
  */
-function magic_login_handle_request(): void {
+function wp_cli_magic_login_handle_request(): void {
     // phpcs:disable WordPress.Security.NonceVerification.Recommended
     if (
         ! isset( $_GET['action'], $_GET['uid'], $_GET['token'] )
@@ -86,4 +86,4 @@ function magic_login_handle_request(): void {
     exit;
 }
 
-add_action( 'login_init', 'magic_login_handle_request' );
+add_action( 'login_init', 'wp_cli_magic_login_handle_request' );
