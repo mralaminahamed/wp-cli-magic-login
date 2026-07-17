@@ -20,10 +20,10 @@ use WP_CLI_Command;
  *     $ wp magic-login --no-launch
  *
  *     # Log in as a specific user by login name
- *     $ wp magic-login --user=johndoe
+ *     $ wp magic-login --login=johndoe
  *
  *     # Log in as a specific user by ID
- *     $ wp magic-login --user=3
+ *     $ wp magic-login --login=3
  *
  *     # Set a custom expiry (in seconds, default 60)
  *     $ wp magic-login --expiry=300
@@ -37,14 +37,18 @@ class MagicLoginCommand extends WP_CLI_Command {
      *
      * ## OPTIONS
      *
-     * [--user=<user>]
-     * : User login name or ID. Defaults to the first administrator account.
+     * [--login=<user>]
+     * : User login name or ID to log in as. The flag is --login (not --user)
+     * : because --user is a reserved WP-CLI global that never reaches a command.
+     * : Resolution order: this flag, then WP-CLI's global --user if given, then
+     * : the first administrator account.
      *
      * [--expiry=<seconds>]
      * : Token expiry time in seconds. Default: 60.
      *
-     * [--no-launch]
-     * : Print the URL only; do not attempt to open the browser.
+     * [--launch]
+     * : Open the URL in the default browser. On by default; pass --no-launch to
+     * : print the URL without opening a browser.
      *
      * [--porcelain]
      * : Output the raw URL only, suitable for scripting.
@@ -52,7 +56,9 @@ class MagicLoginCommand extends WP_CLI_Command {
      * ## EXAMPLES
      *
      *     $ wp magic-login
-     *     $ wp magic-login --user=admin --expiry=300 --no-launch
+     *     $ wp magic-login --login=admin --expiry=300 --no-launch
+     *     # WP-CLI's global --user also works, resolving via the current user:
+     *     $ wp magic-login --user=admin
      *
      * @when after_wp_load
      *
@@ -72,7 +78,7 @@ class MagicLoginCommand extends WP_CLI_Command {
         $url = $this->generate_login_url( $user, $expiry );
 
         $porcelain = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'porcelain', false );
-        $no_launch = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'no-launch', false );
+        $launch    = (bool) WP_CLI\Utils\get_flag_value( $assoc_args, 'launch', true );
 
         if ( $porcelain ) {
             WP_CLI::line( $url );
@@ -89,7 +95,7 @@ class MagicLoginCommand extends WP_CLI_Command {
 
         WP_CLI::line( $url );
 
-        if ( ! $no_launch ) {
+        if ( $launch ) {
             $this->open_in_browser( $url );
         }
     }
@@ -106,7 +112,7 @@ class MagicLoginCommand extends WP_CLI_Command {
      * @return \WP_User
      */
     private function resolve_user( array $assoc_args ): \WP_User {
-        $user_flag = WP_CLI\Utils\get_flag_value( $assoc_args, 'user', null );
+        $user_flag = WP_CLI\Utils\get_flag_value( $assoc_args, 'login', null );
 
         if ( null !== $user_flag ) {
             // Support both numeric ID and login string.
@@ -118,6 +124,14 @@ class MagicLoginCommand extends WP_CLI_Command {
             }
 
             return $user;
+        }
+
+        // Fall back to WP-CLI's global --user, which WP-CLI consumes before the
+        // command runs (it sets the current user) and never passes on as an
+        // assoc arg. If it was given, honour it here.
+        $current = wp_get_current_user();
+        if ( $current instanceof \WP_User && $current->ID > 0 ) {
+            return $current;
         }
 
         // Default: first user with the administrator role.

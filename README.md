@@ -43,8 +43,10 @@ wp magic-login
 wp magic-login --no-launch
 
 # Target a specific user by login name or ID
-wp magic-login --user=johndoe
-wp magic-login --user=3
+# Use --login (not --user): --user is a reserved WP-CLI global that never
+# reaches the command. WP-CLI's global --user is also honoured as a fallback.
+wp magic-login --login=johndoe
+wp magic-login --login=3
 
 # Set a custom token expiry (seconds)
 wp magic-login --expiry=300
@@ -55,9 +57,9 @@ wp magic-login --porcelain
 
 | Option       | Default | Description                              |
 |--------------|---------|------------------------------------------|
-| `--user`     | first admin | User login name or numeric ID        |
+| `--login`    | current `--user`, else first admin | User login name or numeric ID |
 | `--expiry`   | 60       | Token lifetime in seconds              |
-| `--no-launch`| false    | Print URL without opening the browser   |
+| `--no-launch`| launch on | Print URL without opening the browser  |
 | `--porcelain`| false    | Output raw URL only                     |
 
 ---
@@ -67,7 +69,7 @@ wp magic-login --porcelain
 | Dependency | Version |
 |------------|---------|
 | PHP        | ≥ 7.4   |
-| WP-CLI     | ≥ 2.0   |
+| WP-CLI     | ≥ 2.11  |
 | WordPress  | ≥ 5.0   |
 
 ---
