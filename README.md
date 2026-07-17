@@ -12,55 +12,48 @@ wp package install mralaminahamed/wp-cli-magic-login
 
 ---
 
-## Commands
+## Command: `wp magic-login`
 
-### `wp magic-login install-server`
-
-Installs the magic-login handler mu-plugin to the WordPress site.
-
-```bash
-# Install the handler to the current site
-wp magic-login install-server
-
-# Overwrite if already installed
-wp magic-login install-server --force
-
-# Manually specify the path to the mu-plugin
-ln -s ~/.wp-cli/packages/vendor/mralaminahamed/wp-cli-magic-login/plugin/wp-cli-magic-login-server.php wp-content/mu-plugins/wp-cli-magic-login-server.php
-```
-
----
-
-### `wp magic-login`
-
-Generates a one-time login URL for any WordPress user without requiring a password.
+Generates a one-time login URL for a WordPress user without a password, and opens
+it in the browser. The companion handler mu-plugin is **installed and kept
+up to date automatically** — there is no separate install step.
 
 ```bash
-# Log in as the first administrator (opens browser automatically)
+# Log in as the sole administrator (opens browser automatically)
 wp magic-login
 
 # Print the URL only; do not open the browser
 wp magic-login --no-launch
 
-# Target a specific user by login name or ID
-# Use --login (not --user): --user is a reserved WP-CLI global that never
-# reaches the command. WP-CLI's global --user is also honoured as a fallback.
+# Target a specific user by login name, ID, or email.
+# Use --login (not --user): --user is a reserved WP-CLI global that never reaches
+# the command. WP-CLI's global --user is honoured as a fallback.
 wp magic-login --login=johndoe
 wp magic-login --login=3
+wp magic-login --login=jane@example.test
 
-# Set a custom token expiry (seconds)
+# Land on a specific admin screen after login
+wp magic-login --redirect=edit.php
+
+# Custom token expiry (seconds)
 wp magic-login --expiry=300
 
-# Output raw URL only (useful in scripts)
+# Raw URL only (scripting)
 wp magic-login --porcelain
 ```
 
-| Option       | Default | Description                              |
-|--------------|---------|------------------------------------------|
-| `--login`    | current `--user`, else first admin | User login name or numeric ID |
-| `--expiry`   | 60       | Token lifetime in seconds              |
-| `--no-launch`| launch on | Print URL without opening the browser  |
-| `--porcelain`| false    | Output raw URL only                     |
+| Option                | Default | Description                                                             |
+|-----------------------|---------|-------------------------------------------------------------------------|
+| `--login`             | current `--user`, else the sole admin | User to log in as: login name, ID, or email |
+| `--expiry`            | 60      | Token lifetime in seconds                                               |
+| `--redirect`          | wp-admin | Same-host path/URL to land on after login                              |
+| `--no-launch`         | launch on | Print the URL without opening a browser                               |
+| `--porcelain`         | false   | Output the raw URL only                                                 |
+| `--no-install-server` | false   | Skip the automatic handler install/refresh                              |
+| `--force`             | false   | Run on a production environment and force-refresh the handler           |
+
+When several administrators exist and no user is given (and WP-CLI has no current
+user), the command lists the administrators and asks you to pick one with `--login`.
 
 ---
 
@@ -78,9 +71,10 @@ wp magic-login --porcelain
 
 This package is intended **exclusively for local and staging environments**.
 
-- Do **not** install the magic-login handler on production sites
-- The generated token is single-use and transient-backed
-- Always restrict CLI access on staging environments
+- The command **refuses to run when `wp_get_environment_type()` is `production`** unless `--force` is passed.
+- The generated token is single-use, transient-backed, and stored only as a hash (`wp_hash`), compared with `hash_equals()`.
+- A fresh URL for a user invalidates any previous unused one.
+- Always restrict CLI access on staging environments.
 
 ---
 

@@ -43,8 +43,7 @@
             "dev-trunk": "1.x-dev"
         },
         "commands": [
-            "magic-login",
-            "magic-login install-server"
+            "magic-login"
         ]
     },
     "config": {
